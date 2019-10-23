@@ -1,0 +1,7 @@
+{
+ "project_name": "webviz-my-plugins",
+ "short_description": "",
+ "author_name": "",
+ "package_name": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+ "open_source_license": ["GNU Affero General Public License v3.0", "Apache Software License 2.0",  "MIT license", "Not open source"]
+}
