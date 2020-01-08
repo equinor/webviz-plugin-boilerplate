@@ -1,0 +1,35 @@
+language: python
+
+addons:
+    chrome: stable
+
+python:
+  - "3.6"
+  - "3.7"
+  - "3.8"
+
+jobs:
+  fast_finish: true
+  allow_failures:
+    - python: "3.8"
+
+before_install:
+  - sudo apt-get -qq update
+  - pip install cookiecutter
+  - pip install --upgrade six
+
+script:
+  - |
+    if [ $TRAVIS_PULL_REQUEST == "false" ]; then
+      cookiecutter gh:equinor/webviz-plugin-boilerplate --no-input
+    else
+      cookiecutter gh:$TRAVIS_PULL_REQUEST_SLUG --no-input --checkout $TRAVIS_PULL_REQUEST_BRANCH
+    fi
+  - pushd ./webviz-my-plugins
+  - git init
+  - pip install .
+  - pip install .[tests]
+  - black . --check
+  - pylint webviz_my_plugins
+  - webviz build ./examples/basic_example.yaml --portable ./some_portable_app
+  - popd

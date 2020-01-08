@@ -1,4 +1,3 @@
-
 from setuptools import setup, find_packages
 
 with open("README.md", "r") as fh:
@@ -14,14 +13,12 @@ setup(
     author="{{ cookiecutter.author_name }}",
     packages=find_packages(exclude=["tests"]),
     entry_points={
-        "webviz_config_containers": [
-            "SomeCustomContainer = {{cookiecutter.package_name}}.containers:SomeCustomContainer",
-            "SomeOtherCustomContainer = {{cookiecutter.package_name}}.containers:SomeOtherCustomContainer",
+        "webviz_config_plugins": [
+            "SomeCustomPlugin = {{cookiecutter.package_name}}.plugins:SomeCustomPlugin",
+            "SomeOtherCustomPlugin = {{cookiecutter.package_name}}.plugins:SomeOtherCustomPlugin",
         ]
     },
-    install_requires=[
-        "webviz-config>=0.0.24",
-    ],
+    install_requires=["webviz-config>=0.0.40",],
     tests_require=TESTS_REQUIRE,
     extras_require={"tests": TESTS_REQUIRE},
     setup_requires=["setuptools_scm~=3.2"],

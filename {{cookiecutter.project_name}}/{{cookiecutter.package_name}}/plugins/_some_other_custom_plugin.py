@@ -2,11 +2,14 @@ from uuid import uuid4
 
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from webviz_config import WebvizContainerABC
+from webviz_config import WebvizPluginABC
 
 
-class SomeOtherCustomContainer(WebvizContainerABC):
+class SomeOtherCustomPlugin(WebvizPluginABC):
     def __init__(self, app):
+
+        super().__init__()
+
         self.button_id = f"submit-button-{uuid4()}"
         self.div_id = f"output-state-{uuid4()}"
 

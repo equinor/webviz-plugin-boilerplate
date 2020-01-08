@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/equinor/webviz-plugin-boilerplate.svg?branch=master)](https://travis-ci.org/equinor/webviz-plugin-boilerplate)
+[![Python 3.6 | 3.7](https://img.shields.io/badge/python-3.6%20|%203.7-blue.svg)](https://www.python.org/)
+
 # Quickly get started creating plugins to `webviz-config`
 
 This repository will quickly get you started creating your own [`webviz-config`](https://github.com/equinor/webviz-config) plugins :rocket:.
@@ -18,7 +21,7 @@ Creating a new Python package with [`webviz-config`](https://github.com/equinor/
    
 2. :running: **Run `cookiecutter`.**
    ```bash
-   cookiecutter gh:equinor/webviz-container-boilerplate
+   cookiecutter gh:equinor/webviz-plugin-boilerplate
    ```
 
 3. :question: **Fill in the questions asked.** Project name, author name etc.
@@ -28,7 +31,7 @@ Creating a new Python package with [`webviz-config`](https://github.com/equinor/
 
 ## Install your new Python plugin package
 
-The default package created for you contains some dummy containers. These you can later delete/and or overwrite with your fancy containers. You can have an arbitrary number of containers in your package.
+The default package created for you contains some dummy plugins. These you can later delete/and or overwrite with your fancy plugins. You can have an arbitrary number of plugins in your package.
 
 To install your plugin package in _development mode_, run
 ```bash
@@ -47,7 +50,7 @@ This will (first time) install all dependencies, but the `-e` flag will also mak
 
 ## Test your new Python plugin package
 
-After installation you can test the custom containers from your package using the provided example configuration file:
+After installation you can test the custom plugins from your package using the provided example configuration file:
 ```bash
 webviz build ./examples/basic_example.yaml
 ```
@@ -55,4 +58,4 @@ webviz build ./examples/basic_example.yaml
 
 ## Make awesome stuff :eyeglasses:
 
-You are now ready to modify the package with your own containers. Have fun! :cake:
+You are now ready to modify the package with your own plugins. Have fun! :cake:

@@ -1,8 +1,8 @@
 import dash_html_components as html
-from webviz_config import WebvizContainerABC
+from webviz_config import WebvizPluginABC
 
 
-class SomeCustomContainer(WebvizContainerABC):
+class SomeCustomPlugin(WebvizPluginABC):
     @property
     def layout(self):
         return html.Div(
