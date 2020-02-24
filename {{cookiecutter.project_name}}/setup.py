@@ -26,6 +26,9 @@ setup(
     zip_safe=False,
     classifiers=[
         "Natural Language :: English",
+        "Environment :: Web Environment",
+        "Framework :: Dash",
+        "Framework :: Flask",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
     ],
