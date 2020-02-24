@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/equinor/webviz-plugin-boilerplate.svg?branch=master)](https://travis-ci.org/equinor/webviz-plugin-boilerplate)
-[![Python 3.6 | 3.7](https://img.shields.io/badge/python-3.6%20|%203.7-blue.svg)](https://www.python.org/)
+[![Python 3.6 | 3.7 | 3.8](https://img.shields.io/badge/python-3.6%20|%203.7%20|%203.8-blue.svg)](https://www.python.org/)
 
 # Quickly get started creating plugins to `webviz-config`
 
