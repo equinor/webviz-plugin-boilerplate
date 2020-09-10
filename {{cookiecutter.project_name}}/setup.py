@@ -18,7 +18,9 @@ setup(
             "SomeOtherCustomPlugin = {{cookiecutter.package_name}}.plugins:SomeOtherCustomPlugin",
         ]
     },
-    install_requires=["webviz-config>=0.0.40",],
+    install_requires=[
+        "webviz-config>=0.1.0",
+    ],
     tests_require=TESTS_REQUIRE,
     extras_require={"tests": TESTS_REQUIRE},
     setup_requires=["setuptools_scm~=3.2"],
