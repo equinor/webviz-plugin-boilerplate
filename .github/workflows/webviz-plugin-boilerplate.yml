@@ -9,15 +9,14 @@ on:
       - master
   schedule:
     # Run CI daily and check that tests are working with latest dependencies
-    - cron:  '0 0 * * *'
+    - cron: "0 0 * * *"
 
 jobs:
-
   webviz-plugin-boilerplate:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.6', '3.7', '3.8', '3.9']
+        python-version: ["3.6", "3.7", "3.8", "3.9"]
 
     steps:
       - name: 📖 Checkout commit locally
@@ -30,38 +29,21 @@ jobs:
 
       - name: 📦 Install dependencies
         run: |
-          pip install --upgrade pip        
-          pip install cookiecutter
-
-      - name: 🍪 Create a cookie (from master)
-        if: github.ref == 'refs/heads/master'
-        run: cookiecutter gh:equinor/webviz-plugin-boilerplate --no-input
-
-      - name: 🍪 Create a cookie (from feature branch)
-        if: github.ref != 'refs/heads/master'
-        run: cookiecutter . --no-input
-
-      - name: 📦 Install cookie
-        run: |
-          pushd ./webviz-my-plugins
-          git init
+          pip install --upgrade pip
           pip install .
 
       - name: 📦 Install test dependencies
         run: |
-          pushd ./webviz-my-plugins
           pip install .[tests]
-  
+
       - name: 🧾 List all installed packages
         run: pip freeze
 
       - name: 🕵️ Check code style & linting
         run: |
-          pushd ./webviz-my-plugins
-          black --check .
-          pylint webviz_my_plugins
+          black --check webviz_plugin_boilerplate
+          pylint webviz_plugin_boilerplate
 
       - name: 🤖 Run tests
         run: |
-          pushd ./webviz-my-plugins
-          webviz build ./examples/basic_example.yaml --portable ./some_portable_app
+          webviz build ./examples/boilerplate_example.yaml --portable ./some_portable_app

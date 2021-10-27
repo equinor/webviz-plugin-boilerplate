@@ -1,0 +1,17 @@
+title: Test of some custom containers
+
+pages:
+  - title: Front page
+    content:
+      - This is a `webviz` instance created from a configuration file.
+      - Open menu on the left to select page for more advanced demo plugins
+      - SomeCustomPlugin:
+
+  - title: Some other page
+    content:
+      - SomeOtherCustomPlugin:
+
+  - title: Best practice plugin
+    content:
+      - This is a `webviz` plugin implemented with suggestion to best practice code structure
+      - BestPracticePlugin:
