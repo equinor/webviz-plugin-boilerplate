@@ -9,7 +9,7 @@ This repository will quickly get you started creating your own [`webviz-config`]
 
 ## Create a new Python plugin package
 
-Creating a new Python package with [`webviz-config`](https://github.com/equinor/webviz-config) plugins by pushing `Use this template`-button(https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+Creating a new Python package with [`webviz-config`](https://github.com/equinor/webviz-config) plugins by pushing [`Use this template`](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template)-button.
 
 Configure new python package in repository by the following steps
 
