@@ -1,17 +1,39 @@
-title: Test of some custom containers
+# ------------------------------
+options:
+  menu:
+    show_logo: true
+    bar_position: left
+    drawer_position: left
+    initially_pinned: true
+    initially_collapsed: true
 
-pages:
-  - title: Front page
+# ------------------------------
+layout:
+  - section: Webviz Boilerplate
     content:
-      - This is a `webviz` instance created from a configuration file.
-      - Open menu on the left to select page for more advanced demo plugins
-      - SomeCustomPlugin:
+      # ------------------------------
 
-  - title: Some other page
-    content:
-      - SomeOtherCustomPlugin:
+      - page: Front page
+        icon: home
+        content:
+          - This is a `webviz` instance created from a configuration file.
+          - Open menu on the left to select page for demo plugins.
 
-  - title: Best practice plugin
+  - section: Example Plugins
     content:
-      - This is a `webviz` plugin implemented with suggestion to best practice code structure
-      - BestPracticePlugin:
+      - group: Simple Plugins
+        icon: label
+        content:
+          - page: Some custom plugin
+            content:
+              - SomeCustomPlugin:
+          - page: Some other custom plugin
+            content:
+              - SomeOtherCustomPlugin:
+      - group: Advanced Plugins
+        icon: table_chart
+        content:
+          - page: Best practice plugin
+            content:
+              - This is a `webviz` plugin implemented with suggestion to best practice code structure
+              - BestPracticePlugin:
