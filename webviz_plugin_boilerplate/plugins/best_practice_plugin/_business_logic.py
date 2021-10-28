@@ -18,18 +18,18 @@ from typing import Dict, ItemsView, List
 class GraphData:
     """Definition of graph data"""
 
-    def __init__(self, x: List[int], y: List[int]) -> None:
-        if len(x) != len(y):
+    def __init__(self, x_data: List[int], y_data: List[int]) -> None:
+        if len(x_data) != len(y_data):
             raise ValueError("Length of x and y data must be equal!")
 
-        self._x = x
-        self._y = y
+        self._x_data = x_data
+        self._y_data = y_data
 
-    def x(self) -> List[int]:
-        return self._x
+    def x_data(self) -> List[int]:
+        return self._x_data
 
-    def y(self) -> List[int]:
-        return self._y
+    def y_data(self) -> List[int]:
+        return self._y_data
 
 
 class GraphSet:
@@ -63,9 +63,9 @@ class GraphDataModel:
 
     def populate_with_mock_data(self):
         graph_dict: Dict[str, GraphData] = {
-            "First Graph": GraphData(x=[0, 1, 2, 3, 4], y=[1, 3, -2, 5, 0]),
-            "Second Graph": GraphData(x=[0, 1, 2, 3, 4], y=[-3, 4, 0, 2, 6]),
-            "Third Graph": GraphData(x=[0, 1, 2, 3, 4], y=[0, 2, 4, 2, 0]),
+            "First Graph": GraphData(x_data=[0, 1, 2, 3, 4], y_data=[1, 3, -2, 5, 0]),
+            "Second Graph": GraphData(x_data=[0, 1, 2, 3, 4], y_data=[-3, 4, 0, 2, 6]),
+            "Third Graph": GraphData(x_data=[0, 1, 2, 3, 4], y_data=[0, 2, 4, 2, 0]),
         }
         self._graph_set = GraphSet(graph_dict)
 
@@ -74,13 +74,13 @@ class GraphDataModel:
 
     @staticmethod
     def create_reversed_data(graph_data: GraphData) -> GraphData:
-        x = graph_data.x().copy()
-        y = graph_data.y().copy()
-        list.reverse(y)
-        return GraphData(x, y)
+        x_data = graph_data.x_data().copy()
+        y_data = graph_data.y_data().copy()
+        list.reverse(y_data)
+        return GraphData(x_data, y_data)
 
     @staticmethod
     def create_flipped_data(graph_data: GraphData) -> GraphData:
-        x = graph_data.x().copy()
-        y = [-elm for elm in graph_data.y()]
-        return GraphData(x, y)
+        x_data = graph_data.x_data().copy()
+        y_data = [-elm for elm in graph_data.y_data()]
+        return GraphData(x_data, y_data)

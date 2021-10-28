@@ -23,6 +23,10 @@ class LayoutElements:
 
     Layout file is owner of ID's and provides the definition to the users,
     e.g. callbacks (Input, State and Output properties).
+
+    NOTE: Other solutions can be used, the main goal is to have a set of defined
+    names for element ID which is provided to callbacks - preventing hard coded
+    string values.
     """
 
     GRAPH = "graph"

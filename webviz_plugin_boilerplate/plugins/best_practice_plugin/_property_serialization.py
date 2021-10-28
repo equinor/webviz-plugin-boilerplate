@@ -35,7 +35,8 @@ class GraphTypeOptions(str, Enum):
     """
     Type definition of graph type options
 
-    For de-serialization of graph mode selection in callback
+    For de-serialization of graph type selection in callback Input/State
+    property.
     """
 
     LINE_PLOT = "Line plot"
@@ -47,6 +48,7 @@ class GraphDataVisualizationOptions(str, Enum):
     Type definition of graph data visualization options
 
     For de-serialization of graph data visualization selection in callback
+    Input/State property.
     """
 
     RAW = "Raw"
@@ -56,27 +58,30 @@ class GraphDataVisualizationOptions(str, Enum):
 
 class GraphFigureBuilder:
     """
-    Figure builder for creating/building output data for the callback
+    Figure builder for creating/building serializable Output property data
+    for the callback.
 
-    Contains function for adding wanted data and function for getting
-    the serialized data for callback Output
+    Contains functions for adding title, graph data and retreving the serialized
+    data for callback Output property.
     """
 
-    def __init__(self, graph_mode: GraphTypeOptions) -> None:
+    def __init__(self, graph_type: GraphTypeOptions) -> None:
         self._figure = go.Figure()
-        self._graph_mode = graph_mode
+        self._graph_type = graph_type
 
     def add_graph_title(self, title: str) -> None:
         self._figure.update_layout(title=title)
 
     def add_graph_data(self, graph_data: GraphData) -> None:
         trace = None
-        if self._graph_mode == GraphTypeOptions.LINE_PLOT:
-            trace = go.Scatter(x=graph_data.x(), y=graph_data.y(), mode="lines")
-        if self._graph_mode == GraphTypeOptions.BAR_CHART:
-            trace = go.Bar(x=graph_data.x(), y=graph_data.y())
+        if self._graph_type == GraphTypeOptions.LINE_PLOT:
+            trace = go.Scatter(
+                x=graph_data.x_data(), y=graph_data.y_data(), mode="lines"
+            )
+        if self._graph_type == GraphTypeOptions.BAR_CHART:
+            trace = go.Bar(x=graph_data.x_data(), y=graph_data.y_data())
         if not trace:
-            raise ValueError(f'Graph mode "{self._graph_mode.value}" is not handled!')
+            raise ValueError(f'Graph type "{self._graph_type.value}" is not handled!')
         self._figure.add_trace(trace)
 
     def get_serialized_figure(self) -> dict:
