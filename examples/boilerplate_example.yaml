@@ -1,0 +1,39 @@
+# ------------------------------
+options:
+  menu:
+    show_logo: true
+    bar_position: left
+    drawer_position: left
+    initially_pinned: true
+    initially_collapsed: true
+
+# ------------------------------
+layout:
+  - section: Webviz Boilerplate
+    content:
+      # ------------------------------
+
+      - page: Front page
+        icon: home
+        content:
+          - This is a `webviz` instance created from a configuration file.
+          - Open menu on the left to select page for demo plugins.
+
+  - section: Example Plugins
+    content:
+      - group: Simple Plugins
+        icon: label
+        content:
+          - page: Some custom plugin
+            content:
+              - SomeCustomPlugin:
+          - page: Some other custom plugin
+            content:
+              - SomeOtherCustomPlugin:
+      - group: Advanced Plugins
+        icon: table_chart
+        content:
+          - page: Best practice plugin
+            content:
+              - This is a `webviz` plugin implemented with suggestion to best practice code structure
+              - BestPracticePlugin:

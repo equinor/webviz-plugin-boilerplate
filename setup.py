@@ -6,16 +6,16 @@ with open("README.md", "r") as fh:
 TESTS_REQUIRE = ["selenium~=3.141", "pylint", "mock", "black", "bandit"]
 
 setup(
-    name="{{ cookiecutter.package_name }}",
-    description="{{ cookiecutter.short_description }}",
+    name="webviz_plugin_boilerplate",
+    description="Webviz plugin boilerplate with example plugins",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    author="{{ cookiecutter.author_name }}",
     packages=find_packages(exclude=["tests"]),
     entry_points={
         "webviz_config_plugins": [
-            "SomeCustomPlugin = {{cookiecutter.package_name}}.plugins:SomeCustomPlugin",
-            "SomeOtherCustomPlugin = {{cookiecutter.package_name}}.plugins:SomeOtherCustomPlugin",
+            "SomeCustomPlugin = webviz_plugin_boilerplate.plugins:SomeCustomPlugin",
+            "SomeOtherCustomPlugin = webviz_plugin_boilerplate.plugins:SomeOtherCustomPlugin",
+            "BestPracticePlugin = webviz_plugin_boilerplate.plugins:BestPracticePlugin",
         ]
     },
     install_requires=[
