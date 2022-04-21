@@ -1,6 +1,6 @@
 from typing import Callable
 
-from dash import Dash, Input, Output, no_update
+from dash import callback, Input, Output, no_update
 from dash.exceptions import PreventUpdate
 
 
@@ -33,8 +33,8 @@ from ._property_serialization import (
 ###########################################################################
 
 
-def plugin_callbacks(app: Dash, get_uuid: Callable, graph_data_model: GraphDataModel):
-    @app.callback(
+def plugin_callbacks(get_uuid: Callable, graph_data_model: GraphDataModel):
+    @callback(
         Output(get_uuid(LayoutElements.GRAPH), "figure"),
         [
             Input(get_uuid(LayoutElements.GRAPH_SELECTION_DROPDOWN), "value"),

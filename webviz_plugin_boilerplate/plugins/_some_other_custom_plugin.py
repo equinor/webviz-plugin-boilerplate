@@ -1,19 +1,20 @@
 from uuid import uuid4
 
+from dash import callback
 import dash_html_components as html
 from dash.dependencies import Input, Output
 from webviz_config import WebvizPluginABC
 
 
 class SomeOtherCustomPlugin(WebvizPluginABC):
-    def __init__(self, app):
+    def __init__(self):
 
         super().__init__()
 
         self.button_id = f"submit-button-{uuid4()}"
         self.div_id = f"output-state-{uuid4()}"
 
-        self.set_callbacks(app)
+        self.set_callbacks()
 
     @property
     def layout(self):
@@ -25,8 +26,8 @@ class SomeOtherCustomPlugin(WebvizPluginABC):
             ]
         )
 
-    def set_callbacks(self, app):
-        @app.callback(
+    def set_callbacks(self):
+        @callback(
             Output(self.div_id, "children"), [Input(self.button_id, "n_clicks")]
         )
         def _update_output(n_clicks):
