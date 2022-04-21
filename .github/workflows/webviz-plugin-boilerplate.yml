@@ -3,10 +3,10 @@ name: webviz-plugin-boilerplate
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
   schedule:
     # Run CI daily and check that tests are working with latest dependencies
     - cron: "0 0 * * *"
