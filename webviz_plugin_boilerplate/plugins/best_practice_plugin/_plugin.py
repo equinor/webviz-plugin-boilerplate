@@ -2,7 +2,6 @@ from typing import Union, Type
 
 from webviz_config import WebvizPluginABC
 
-from dash import Dash
 from dash.development.base_component import Component
 
 from ._business_logic import GraphDataModel
@@ -41,13 +40,13 @@ class BestPracticePlugin(WebvizPluginABC):
     for Dash callback Output property by use of data from business logic.
     """
 
-    def __init__(self, app: Dash) -> None:
+    def __init__(self) -> None:
         super().__init__()
 
         self._graph_data_model = GraphDataModel()
         self._graph_data_model.populate_with_mock_data()
 
-        self.set_callbacks(app)
+        self.set_callbacks()
 
     @property
     def layout(self) -> Union[str, Type[Component]]:
@@ -56,5 +55,5 @@ class BestPracticePlugin(WebvizPluginABC):
             graph_names=self._graph_data_model.graph_set().graph_names(),
         )
 
-    def set_callbacks(self, app) -> None:
-        plugin_callbacks(app, self.uuid, self._graph_data_model)
+    def set_callbacks(self) -> None:
+        plugin_callbacks(self.uuid, self._graph_data_model)
