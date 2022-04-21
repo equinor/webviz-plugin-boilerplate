@@ -27,8 +27,6 @@ class SomeOtherCustomPlugin(WebvizPluginABC):
         )
 
     def set_callbacks(self):
-        @callback(
-            Output(self.div_id, "children"), [Input(self.button_id, "n_clicks")]
-        )
+        @callback(Output(self.div_id, "children"), [Input(self.button_id, "n_clicks")])
         def _update_output(n_clicks):
             return f"Button has been pressed {n_clicks} times."
