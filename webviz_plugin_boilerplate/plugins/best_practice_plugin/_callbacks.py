@@ -17,13 +17,13 @@ from ._property_serialization import (
 #
 # Collection of Dash callbacks.
 #
-# The callback functions should retreive Dash Inputs and States, utilize
+# The callback functions should retrieve Dash Inputs and States, utilize
 # business logic and props serialization functionality for providing the
 # JSON serializable Output for Dash properties callbacks.
 #
 # The callback Input and States should be converted from JSON serializable
 # formats to strongly typed and filtered formats. Furthermore the callback
-# can provide the converted arguments to the business logic for retreiving
+# can provide the converted arguments to the business logic for retrieving
 # data or performing ad-hoc calculations.
 #
 # Results from the business logic is provided to the props serialization to

@@ -11,7 +11,7 @@ from ._property_serialization import GraphDataVisualizationOptions, GraphTypeOpt
 # Defines the Dash layout, and builds the HTML-element structure
 # for the plugin.
 #
-# Ownership of the layout element ID's, which is provied to the
+# Ownership of the layout element ID's, which is provided to the
 # various callback Inputs, States and Outputs.
 #
 ######################################################################
