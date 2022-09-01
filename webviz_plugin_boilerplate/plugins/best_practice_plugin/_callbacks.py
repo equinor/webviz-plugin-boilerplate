@@ -1,17 +1,17 @@
 from typing import Callable
 
-from dash import callback, Input, Output, no_update
+from dash import Input, Output, callback, no_update
 from dash.exceptions import PreventUpdate
 
+from webviz_plugin_boilerplate._utils._data_model import DataModel
 
-from ._business_logic import GraphDataModel
+from ._business_logic import create_flipped_data, create_reversed_data
 from ._layout import LayoutElements
 from ._property_serialization import (
-    GraphFigureBuilder,
     GraphDataVisualizationOptions,
+    GraphFigureBuilder,
     GraphTypeOptions,
 )
-
 
 ###########################################################################
 #
@@ -33,16 +33,12 @@ from ._property_serialization import (
 ###########################################################################
 
 
-def plugin_callbacks(get_uuid: Callable, graph_data_model: GraphDataModel):
+def plugin_callbacks(get_uuid: Callable, data_model: DataModel):
     @callback(
         Output(get_uuid(LayoutElements.GRAPH), "figure"),
-        [
-            Input(get_uuid(LayoutElements.GRAPH_SELECTION_DROPDOWN), "value"),
-            Input(get_uuid(LayoutElements.GRAPH_TYPE_RADIO_ITEMS), "value"),
-            Input(
-                get_uuid(LayoutElements.GRAPH_DATA_VISUALIZATION_RADIO_ITEMS), "value"
-            ),
-        ],
+        Input(get_uuid(LayoutElements.GRAPH_SELECTION_DROPDOWN), "value"),
+        Input(get_uuid(LayoutElements.GRAPH_TYPE_RADIO_ITEMS), "value"),
+        Input(get_uuid(LayoutElements.GRAPH_DATA_VISUALIZATION_RADIO_ITEMS), "value"),
     )
     def _update_graph(
         selected_graph_value: str,
@@ -58,7 +54,7 @@ def plugin_callbacks(get_uuid: Callable, graph_data_model: GraphDataModel):
         )
         selected_graph = (
             selected_graph_value
-            if selected_graph_value in graph_data_model.graph_set().graph_names()
+            if selected_graph_value in data_model.data_set().names()
             else None
         )
 
@@ -71,11 +67,11 @@ def plugin_callbacks(get_uuid: Callable, graph_data_model: GraphDataModel):
         ###############################################################
         # Business logic with "strongly typed" and filtered data format
         ###############################################################
-        graph_data = graph_data_model.graph_set().graph_data(selected_graph)
+        graph_data = data_model.data_set().get_data(selected_graph)
         if graph_data_visualization is GraphDataVisualizationOptions.REVERSED:
-            graph_data = graph_data_model.create_reversed_data(graph_data)
+            graph_data = create_reversed_data(graph_data)
         elif graph_data_visualization is GraphDataVisualizationOptions.FLIPPED:
-            graph_data = graph_data_model.create_flipped_data(graph_data)
+            graph_data = create_flipped_data(graph_data)
         elif graph_data_visualization is not GraphDataVisualizationOptions.RAW:
             return no_update
 

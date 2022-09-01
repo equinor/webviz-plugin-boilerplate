@@ -51,6 +51,7 @@ def main_layout(get_uuid: Callable, graph_names: List[str]) -> wcc.FlexBox:
                                     id=get_uuid(
                                         LayoutElements.GRAPH_SELECTION_DROPDOWN
                                     ),
+                                    clearable=False,
                                     options=[
                                         {"label": name, "value": name}
                                         for name in graph_names
@@ -79,7 +80,7 @@ def main_layout(get_uuid: Callable, graph_names: List[str]) -> wcc.FlexBox:
                             ],
                         ),
                         wcc.Selectors(
-                            label="Graph data vitalization",
+                            label="Graph data visualization",
                             children=[
                                 wcc.RadioItems(
                                     id=get_uuid(
