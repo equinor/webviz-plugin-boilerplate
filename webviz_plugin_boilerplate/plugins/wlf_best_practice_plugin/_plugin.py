@@ -1,12 +1,15 @@
 from enum import Enum
+from typing import List
 
 from dash import Input
 from webviz_config import WebvizPluginABC
 
 from ..._utils._data_model import DataModel
 from ._shared_settings import DataNameSelection
-from ._views._plot_view import PlotView
-from ._views._table_view import TableView
+from ._views._plot_view import GraphDataVisualization, GraphTypeSettings, PlotView
+from ._views._plot_view._view_elements import GraphSettings, PlotViewElement
+from ._views._table_view import TableOrderSelection, TableView
+from ._views._table_view._view_elements import TableViewElement
 
 
 class WlfBestPracticePlugin(WebvizPluginABC):
@@ -74,7 +77,7 @@ class WlfBestPracticePlugin(WebvizPluginABC):
         SHARED_SETTINGS = "shared-settings"
 
     def __init__(
-        self, screenshot_filename: str = "webviz-screenshot.png", stretch: bool = False
+        self, screenshot_filename: str = "webviz-screenshot.png", _stretch: bool = False
     ) -> None:
         super().__init__(screenshot_filename, True)
 
@@ -114,3 +117,52 @@ class WlfBestPracticePlugin(WebvizPluginABC):
             ),
             WlfBestPracticePlugin.Ids.TABLE_VIEW.value,
         )
+
+    @property
+    def tour_steps(self) -> List[dict]:
+        return [
+            {
+                "id": self.view(WlfBestPracticePlugin.Ids.PLOT_VIEW)
+                .view_element(PlotView.Ids.PLOT)
+                .component_unique_id(PlotViewElement.Ids.GRAPH),
+                "content": "Over here you see a plot that shows selected data set",
+            },
+            {
+                "id": self.settings_group.component_unique_id(
+                    DataNameSelection.Ids.RADIO_ITEMS
+                ),
+                "content": "Here you can change which data set you prefer.",
+            },
+            {
+                "id": self.view(WlfBestPracticePlugin.Ids.PLOT_VIEW)
+                .settings_group(PlotView.Ids.GRAPH_TYPE_SETTINGS)
+                .component_unique_id(GraphTypeSettings.Ids.RADIO_ITEMS),
+                "content": "...and here you can select which graph type you prefer.",
+            },
+            {
+                "id": self.view(WlfBestPracticePlugin.Ids.PLOT_VIEW)
+                .settings_group(PlotView.Ids.GRAPH_DATA_VISUALIZATION)
+                .component_unique_id(GraphDataVisualization.Ids.RADIO_ITEMS),
+                "content": "...furthermore you can select how to visualize the data values.",
+            },
+            {
+                "id": self.view(WlfBestPracticePlugin.Ids.PLOT_VIEW)
+                .view_element(PlotView.Ids.PLOT)
+                .settings_group(PlotViewElement.Ids.GRAPH_SETTINGS)
+                .component_unique_id(GraphSettings.Ids.RADIO_ITEMS),
+                "content": "The plot contains settings which provides possibility to adjust "
+                "graph colors.",
+            },
+            {
+                "id": self.view(WlfBestPracticePlugin.Ids.TABLE_VIEW)
+                .view_element(TableView.Ids.TABLE)
+                .component_unique_id(TableViewElement.Ids.TABLE),
+                "content": "There is also a table visualizing the data.",
+            },
+            {
+                "id": self.view(WlfBestPracticePlugin.Ids.TABLE_VIEW)
+                .settings_group(TableView.Ids.TABLE_ORDER_SELECTION)
+                .component_unique_id(TableOrderSelection.Ids.RADIO_ITEMS),
+                "content": "You can change the order of the table here.",
+            },
+        ]

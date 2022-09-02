@@ -1,9 +1,11 @@
 import sys
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any, Dict, Union
 
-from dash import Input, Output, callback, no_update
+from dash import Input, Output, State, callback, no_update
 from dash.exceptions import PreventUpdate
+from webviz_config import EncodedFile
 from webviz_config.webviz_plugin_subclasses import ViewABC
 
 from webviz_plugin_boilerplate._utils._data_model import DataModel, DataNames
@@ -32,13 +34,13 @@ class PlotView(ViewABC):
 
     The view contains a plot view element and settings for the graph - where
     graph type (scatter or bar plot) can be selected, and the visualization of
-    the graph data can be changed (raw, flipped or reversed).
+    the graph data values can be changed (raw, flipped or reversed).
 
     `View content:`
     - Plot view element
     - Settings groups:
         - Graph type selection (scatter plot or bar plot)
-        - Data visualization selection (raw, flipped or reversed)
+        - Data value visualization selection (raw, flipped or reversed)
 
     `Callback logic:`
     Update graph figure based on shared settings, view settings and view element
@@ -60,9 +62,10 @@ class PlotView(ViewABC):
 
         self._data_model = data_model
         self._slots = slots
+        self._plot_view_element = PlotViewElement()
 
         column = self.add_column()
-        column.add_view_element(PlotViewElement(), PlotView.Ids.PLOT.value)
+        column.add_view_element(self._plot_view_element, PlotView.Ids.PLOT.value)
 
         self.add_settings_group(
             GraphTypeSettings(), PlotView.Ids.GRAPH_TYPE_SETTINGS.value
@@ -148,3 +151,22 @@ class PlotView(ViewABC):
             figure = figure_builder.get_serialized_figure()
 
             return figure
+
+        @callback(
+            self.view_data_output(),
+            self.view_data_requested(),
+            State(
+                self._plot_view_element.component_unique_id(
+                    PlotViewElement.Ids.GRAPH
+                ).to_string(),
+                "figure",
+            ),
+        )
+        def _download_data(
+            data_requested: Union[int, None],
+            graph_figure: Dict[str, Any],
+        ) -> Union[EncodedFile, str]:
+            if data_requested is None:
+                raise PreventUpdate
+
+            return self._plot_view_element.compressed_plugin_data(graph_figure)

@@ -41,3 +41,7 @@ layout:
           - page: Best practice plugin WLF
             content:
               - WlfBestPracticePlugin:
+                  contact_person:
+                    email: kari.nordmann@equinor.com
+                    name: Kari Nordmann
+                    phone: "000000000"

@@ -1,1 +1,1 @@
-from ._view import TableView
+from ._view import TableOrderSelection, TableView

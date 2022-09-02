@@ -1,6 +1,6 @@
 from webviz_plugin_boilerplate._utils._data_model import Data
 
-from .._settings import TableOrientation
+from .._settings import TableOrder
 
 ######################################################################
 #
@@ -16,16 +16,16 @@ from .._settings import TableOrientation
 ######################################################################
 
 
-def create_oriented_table_data(data: Data, orientation: TableOrientation) -> Data:
+def create_table_data_with_order(data: Data, order: TableOrder) -> Data:
     """
-    Business logic for handling orientation of data.
+    Business logic for handling order of data samples.
 
     The extraction is only to illustrate separation/structuring of business code
     """
     _x = data.x_data().copy()
     _y = data.y_data().copy()
 
-    if orientation is TableOrientation.DESC:
+    if order is TableOrder.DESC:
         _x.reverse()
         _y.reverse()
 
