@@ -1,8 +1,8 @@
-from enum import Enum
 from typing import List
 
 import webviz_core_components as wcc
 from dash.development.base_component import Component
+from webviz_config.utils import StrEnum
 from webviz_config.webviz_plugin_subclasses import SettingsGroupABC
 
 ###################################################################
@@ -13,13 +13,13 @@ from webviz_config.webviz_plugin_subclasses import SettingsGroupABC
 ###################################################################
 
 
-class TableOrder(str, Enum):
+class TableOrder(StrEnum):
     ASC = "asc"
     DESC = "desc"
 
 
 class TableOrderSelection(SettingsGroupABC):
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         RADIO_ITEMS = "radio-items"
 
     def __init__(self) -> None:
@@ -29,18 +29,18 @@ class TableOrderSelection(SettingsGroupABC):
         return [
             wcc.RadioItems(
                 id=self.register_component_unique_id(
-                    TableOrderSelection.Ids.RADIO_ITEMS.value
+                    TableOrderSelection.Ids.RADIO_ITEMS
                 ),
                 options=[
                     {
-                        "label": str.upper(TableOrder.ASC.value),
-                        "value": TableOrder.ASC.value,
+                        "label": str.upper(TableOrder.ASC),
+                        "value": TableOrder.ASC,
                     },
                     {
-                        "label": str.upper(TableOrder.DESC.value),
-                        "value": TableOrder.DESC.value,
+                        "label": str.upper(TableOrder.DESC),
+                        "value": TableOrder.DESC,
                     },
                 ],
-                value=TableOrder.ASC.value,
+                value=TableOrder.ASC,
             )
         ]

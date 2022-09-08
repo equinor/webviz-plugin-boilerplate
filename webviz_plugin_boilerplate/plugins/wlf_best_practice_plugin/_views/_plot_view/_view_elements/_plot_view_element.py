@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import Any, Dict, List, Optional, Union
 
 import pandas as pd
@@ -6,6 +5,7 @@ import webviz_core_components as wcc
 from dash import State, callback
 from dash.exceptions import PreventUpdate
 from webviz_config import EncodedFile, WebvizPluginABC
+from webviz_config.utils import StrEnum
 from webviz_config.webviz_plugin_subclasses import ViewElementABC
 
 from ._settings import GraphSettings
@@ -24,7 +24,7 @@ class PlotViewElement(ViewElementABC):
         - Graph color settings
     """
 
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         GRAPH = "graph"
         GRAPH_SETTINGS = "graph-settings"
 
@@ -32,14 +32,12 @@ class PlotViewElement(ViewElementABC):
         super().__init__()
         self._height = height
 
-        self.add_settings_group(
-            GraphSettings(), PlotViewElement.Ids.GRAPH_SETTINGS.value
-        )
+        self.add_settings_group(GraphSettings(), PlotViewElement.Ids.GRAPH_SETTINGS)
 
     def inner_layout(self) -> wcc.Graph:
         return wcc.Graph(
             style={"display": "block", "height": self._height},
-            id=self.register_component_unique_id(PlotViewElement.Ids.GRAPH.value),
+            id=self.register_component_unique_id(PlotViewElement.Ids.GRAPH),
             config={
                 "responsive": True,
             },

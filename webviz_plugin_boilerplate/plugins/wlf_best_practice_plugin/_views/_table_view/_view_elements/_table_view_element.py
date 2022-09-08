@@ -1,4 +1,3 @@
-from enum import Enum
 from typing import Dict, List, Type, Union
 
 import pandas as pd
@@ -6,6 +5,7 @@ from dash import State, callback, dash_table, html
 from dash.development.base_component import Component
 from dash.exceptions import PreventUpdate
 from webviz_config import EncodedFile, WebvizPluginABC
+from webviz_config.utils import StrEnum
 from webviz_config.webviz_plugin_subclasses import ViewElementABC
 
 
@@ -20,7 +20,7 @@ class TableViewElement(ViewElementABC):
     - Table object
     """
 
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         TABLE = "table"
         TITLE = "title"
 
@@ -32,14 +32,10 @@ class TableViewElement(ViewElementABC):
         return html.Div(
             children=[
                 html.Label(
-                    id=self.register_component_unique_id(
-                        TableViewElement.Ids.TITLE.value
-                    ),
+                    id=self.register_component_unique_id(TableViewElement.Ids.TITLE),
                 ),
                 dash_table.DataTable(
-                    id=self.register_component_unique_id(
-                        TableViewElement.Ids.TABLE.value
-                    ),
+                    id=self.register_component_unique_id(TableViewElement.Ids.TABLE),
                     columns=[{"id": "x", "name": "X"}, {"id": "y", "name": "Y"}],
                 ),
             ]

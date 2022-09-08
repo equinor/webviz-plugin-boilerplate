@@ -1,8 +1,8 @@
-from enum import Enum
 from typing import List
 
 from dash import Input
 from webviz_config import WebvizPluginABC
+from webviz_config.utils import StrEnum
 
 from ..._utils._data_model import DataModel
 from ._shared_settings import DataNameSelection
@@ -70,7 +70,7 @@ class WlfBestPracticePlugin(WebvizPluginABC):
     for Dash callback Output property by use of data from business logic.
     """
 
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         PLOT_VIEW = "plot-view"
         TABLE_VIEW = "table-view"
 
@@ -101,7 +101,7 @@ class WlfBestPracticePlugin(WebvizPluginABC):
                     )
                 ),
             ),
-            WlfBestPracticePlugin.Ids.PLOT_VIEW.value,
+            WlfBestPracticePlugin.Ids.PLOT_VIEW,
         )
         self.add_view(
             TableView(
@@ -115,7 +115,7 @@ class WlfBestPracticePlugin(WebvizPluginABC):
                     )
                 ),
             ),
-            WlfBestPracticePlugin.Ids.TABLE_VIEW.value,
+            WlfBestPracticePlugin.Ids.TABLE_VIEW,
         )
 
     @property

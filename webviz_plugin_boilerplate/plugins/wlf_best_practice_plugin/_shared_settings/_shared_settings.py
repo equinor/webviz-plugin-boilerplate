@@ -1,8 +1,8 @@
-from enum import Enum
 from typing import List
 
 import webviz_core_components as wcc
 from dash.development.base_component import Component
+from webviz_config.utils import StrEnum
 from webviz_config.webviz_plugin_subclasses import SettingsGroupABC
 
 from webviz_plugin_boilerplate._utils._data_model import DataNames
@@ -17,7 +17,7 @@ from webviz_plugin_boilerplate._utils._data_model import DataNames
 
 
 class DataNameSelection(SettingsGroupABC):
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         RADIO_ITEMS = "radio-items"
 
     def __init__(self) -> None:
@@ -26,9 +26,7 @@ class DataNameSelection(SettingsGroupABC):
     def layout(self) -> List[Component]:
         return [
             wcc.RadioItems(
-                id=self.register_component_unique_id(
-                    DataNameSelection.Ids.RADIO_ITEMS.value
-                ),
+                id=self.register_component_unique_id(DataNameSelection.Ids.RADIO_ITEMS),
                 options=[
                     {
                         "label": "First data set",

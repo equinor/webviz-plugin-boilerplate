@@ -1,11 +1,11 @@
 import sys
 from dataclasses import dataclass
-from enum import Enum
 from typing import Any, Dict, Union
 
 from dash import Input, Output, State, callback, no_update
 from dash.exceptions import PreventUpdate
 from webviz_config import EncodedFile
+from webviz_config.utils import StrEnum
 from webviz_config.webviz_plugin_subclasses import ViewABC
 
 from webviz_plugin_boilerplate._utils._data_model import DataModel, DataNames
@@ -47,7 +47,7 @@ class PlotView(ViewABC):
     settings.
     """
 
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         PLOT = "plot"
 
         GRAPH_TYPE_SETTINGS = "graph-type-settings"
@@ -65,42 +65,40 @@ class PlotView(ViewABC):
         self._plot_view_element = PlotViewElement()
 
         column = self.add_column()
-        column.add_view_element(self._plot_view_element, PlotView.Ids.PLOT.value)
+        column.add_view_element(self._plot_view_element, PlotView.Ids.PLOT)
 
+        self.add_settings_group(GraphTypeSettings(), PlotView.Ids.GRAPH_TYPE_SETTINGS)
         self.add_settings_group(
-            GraphTypeSettings(), PlotView.Ids.GRAPH_TYPE_SETTINGS.value
-        )
-        self.add_settings_group(
-            GraphDataVisualization(), PlotView.Ids.GRAPH_DATA_VISUALIZATION.value
+            GraphDataVisualization(), PlotView.Ids.GRAPH_DATA_VISUALIZATION
         )
 
     def set_callbacks(self) -> None:
         @callback(
             Output(
                 self.view_element_unique_id(
-                    PlotView.Ids.PLOT.value, PlotViewElement.Ids.GRAPH.value
+                    PlotView.Ids.PLOT, PlotViewElement.Ids.GRAPH
                 ),
                 "figure",
             ),
             self._slots.data_name_selector,
             Input(
                 self.settings_group_unique_id(
-                    PlotView.Ids.GRAPH_TYPE_SETTINGS.value,
-                    GraphTypeSettings.Ids.RADIO_ITEMS.value,
+                    PlotView.Ids.GRAPH_TYPE_SETTINGS,
+                    GraphTypeSettings.Ids.RADIO_ITEMS,
                 ),
                 "value",
             ),
             Input(
                 self.settings_group_unique_id(
-                    PlotView.Ids.GRAPH_DATA_VISUALIZATION.value,
-                    GraphDataVisualization.Ids.RADIO_ITEMS.value,
+                    PlotView.Ids.GRAPH_DATA_VISUALIZATION,
+                    GraphDataVisualization.Ids.RADIO_ITEMS,
                 ),
                 "value",
             ),
             Input(
-                self.view_element(PlotView.Ids.PLOT.value).setting_group_unique_id(
-                    PlotViewElement.Ids.GRAPH_SETTINGS.value,
-                    GraphSettings.Ids.RADIO_ITEMS.value,
+                self.view_element(PlotView.Ids.PLOT).setting_group_unique_id(
+                    PlotViewElement.Ids.GRAPH_SETTINGS,
+                    GraphSettings.Ids.RADIO_ITEMS,
                 ),
                 "value",
             ),
@@ -143,8 +141,8 @@ class PlotView(ViewABC):
             ###############################################################
             figure_builder = GraphFigureBuilder(graph_type, line_color=color)
             title = (
-                f"{graph_type.value} for {selected_data_name} data collection with"
-                f" {graph_data_visualization.value} data"
+                f"{graph_type} for {selected_data_name} data collection with"
+                f" {graph_data_visualization} data"
             )
             figure_builder.add_graph_title(title)
             figure_builder.add_graph_data(graph_data)

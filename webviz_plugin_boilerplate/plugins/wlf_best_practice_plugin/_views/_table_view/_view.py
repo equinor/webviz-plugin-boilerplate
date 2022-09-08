@@ -1,11 +1,11 @@
 import sys
 from dataclasses import dataclass
-from enum import Enum
 from typing import Dict, List, Tuple, Union
 
 from dash import Input, Output, State, callback
 from dash.exceptions import PreventUpdate
 from webviz_config import EncodedFile
+from webviz_config.utils import StrEnum
 from webviz_config.webviz_plugin_subclasses import ViewABC
 
 from webviz_plugin_boilerplate._utils._data_model import DataModel, DataNames
@@ -38,7 +38,7 @@ class TableView(ViewABC):
     Update table figure based on shared settings and view settings.
     """
 
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         TABLE = "table"
         TABLE_ORDER_SELECTION = "table-order-selection"
 
@@ -54,30 +54,30 @@ class TableView(ViewABC):
         self._table_view_element = TableViewElement()
 
         column = self.add_column()
-        column.add_view_element(self._table_view_element, TableView.Ids.TABLE.value)
+        column.add_view_element(self._table_view_element, TableView.Ids.TABLE)
 
         self.add_settings_group(
-            TableOrderSelection(), TableView.Ids.TABLE_ORDER_SELECTION.value
+            TableOrderSelection(), TableView.Ids.TABLE_ORDER_SELECTION
         )
 
     def set_callbacks(self) -> None:
         @callback(
             Output(
                 self.view_element_unique_id(
-                    TableView.Ids.TABLE.value, TableViewElement.Ids.TABLE.value
+                    TableView.Ids.TABLE, TableViewElement.Ids.TABLE
                 ),
                 "data",
             ),
             Output(
                 self.view_element_unique_id(
-                    TableView.Ids.TABLE.value, TableViewElement.Ids.TITLE.value
+                    TableView.Ids.TABLE, TableViewElement.Ids.TITLE
                 ),
                 "children",
             ),
             Input(
                 self.settings_group_unique_id(
-                    TableView.Ids.TABLE_ORDER_SELECTION.value,
-                    TableOrderSelection.Ids.RADIO_ITEMS.value,
+                    TableView.Ids.TABLE_ORDER_SELECTION,
+                    TableOrderSelection.Ids.RADIO_ITEMS,
                 ),
                 "value",
             ),
@@ -112,7 +112,7 @@ class TableView(ViewABC):
 
             title = (
                 f"Table for {selected_data_name} data structure with"
-                f" {selected_order.value} data"
+                f" {selected_order} data"
             )
 
             return (table_builder.get_serialized_table_data(), title)

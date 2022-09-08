@@ -1,8 +1,8 @@
-from enum import Enum
 from typing import List
 
 import webviz_core_components as wcc
 from dash.development.base_component import Component
+from webviz_config.utils import StrEnum
 from webviz_config.webviz_plugin_subclasses import SettingsGroupABC
 
 ###################################################################
@@ -13,7 +13,7 @@ from webviz_config.webviz_plugin_subclasses import SettingsGroupABC
 ###################################################################
 
 
-class GraphTypeOptions(str, Enum):
+class GraphTypeOptions(StrEnum):
     """
     Type definition of graph type options
 
@@ -25,7 +25,7 @@ class GraphTypeOptions(str, Enum):
     BAR_CHART = "Bar chart"
 
 
-class GraphDataVisualizationOptions(str, Enum):
+class GraphDataVisualizationOptions(StrEnum):
     """
     Type definition of graph data visualization options
 
@@ -39,7 +39,7 @@ class GraphDataVisualizationOptions(str, Enum):
 
 
 class GraphTypeSettings(SettingsGroupABC):
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         RADIO_ITEMS = "radio-items"
 
     def __init__(self) -> None:
@@ -48,26 +48,24 @@ class GraphTypeSettings(SettingsGroupABC):
     def layout(self) -> List[Component]:
         return [
             wcc.RadioItems(
-                id=self.register_component_unique_id(
-                    GraphTypeSettings.Ids.RADIO_ITEMS.value
-                ),
+                id=self.register_component_unique_id(GraphTypeSettings.Ids.RADIO_ITEMS),
                 options=[
                     {
-                        "label": GraphTypeOptions.LINE_PLOT.value,
-                        "value": GraphTypeOptions.LINE_PLOT.value,
+                        "label": GraphTypeOptions.LINE_PLOT,
+                        "value": GraphTypeOptions.LINE_PLOT,
                     },
                     {
-                        "label": GraphTypeOptions.BAR_CHART.value,
-                        "value": GraphTypeOptions.BAR_CHART.value,
+                        "label": GraphTypeOptions.BAR_CHART,
+                        "value": GraphTypeOptions.BAR_CHART,
                     },
                 ],
-                value=GraphTypeOptions.LINE_PLOT.value,
+                value=GraphTypeOptions.LINE_PLOT,
             )
         ]
 
 
 class GraphDataVisualization(SettingsGroupABC):
-    class Ids(str, Enum):
+    class Ids(StrEnum):
         RADIO_ITEMS = "radio-items"
 
     def __init__(self) -> None:
@@ -77,22 +75,22 @@ class GraphDataVisualization(SettingsGroupABC):
         return [
             wcc.RadioItems(
                 id=self.register_component_unique_id(
-                    GraphDataVisualization.Ids.RADIO_ITEMS.value
+                    GraphDataVisualization.Ids.RADIO_ITEMS
                 ),
                 options=[
                     {
                         "label": "Raw data",
-                        "value": GraphDataVisualizationOptions.RAW.value,
+                        "value": GraphDataVisualizationOptions.RAW,
                     },
                     {
                         "label": "Reversed data",
-                        "value": GraphDataVisualizationOptions.REVERSED.value,
+                        "value": GraphDataVisualizationOptions.REVERSED,
                     },
                     {
                         "label": "Flipped data",
-                        "value": GraphDataVisualizationOptions.FLIPPED.value,
+                        "value": GraphDataVisualizationOptions.FLIPPED,
                     },
                 ],
-                value=GraphDataVisualizationOptions.RAW.value,
+                value=GraphDataVisualizationOptions.RAW,
             )
         ]
