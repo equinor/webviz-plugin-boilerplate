@@ -6,7 +6,7 @@ from dash import Input, Output, State, callback, no_update
 from dash.exceptions import PreventUpdate
 from webviz_config import EncodedFile
 from webviz_config.utils import StrEnum
-from webviz_config.webviz_plugin_subclasses import ViewABC
+from webviz_config.webviz_plugin_subclasses import ViewABC, callback_typecheck
 
 from webviz_plugin_boilerplate._utils._data_model import DataModel, DataNames
 
@@ -103,22 +103,13 @@ class PlotView(ViewABC):
                 "value",
             ),
         )
+        @callback_typecheck
         def _update_graph(
-            selected_data_name_value: str,
-            graph_type_value: str,
-            graph_data_visualization_value: str,
-            color_value: str,
+            selected_data_name: DataNames,
+            graph_type: GraphTypeOptions,
+            graph_data_visualization: GraphDataVisualizationOptions,
+            color: LineColor,
         ) -> dict:
-            ##################################################################################
-            # De-serialize from JSON serializable format to strongly typed and filtered format
-            ##################################################################################
-            graph_type = GraphTypeOptions(graph_type_value)
-            graph_data_visualization = GraphDataVisualizationOptions(
-                graph_data_visualization_value
-            )
-            selected_data_name = DataNames(selected_data_name_value)
-            color = LineColor(color_value)
-
             ###########################################
             # Prevent update on invalid graph selection
             ###########################################

@@ -6,7 +6,7 @@ from dash import Input, Output, State, callback
 from dash.exceptions import PreventUpdate
 from webviz_config import EncodedFile
 from webviz_config.utils import StrEnum
-from webviz_config.webviz_plugin_subclasses import ViewABC
+from webviz_config.webviz_plugin_subclasses import ViewABC, callback_typecheck
 
 from webviz_plugin_boilerplate._utils._data_model import DataModel, DataNames
 
@@ -83,14 +83,10 @@ class TableView(ViewABC):
             ),
             self._slots.data_name_selector,
         )
+        @callback_typecheck
         def _update_table(
-            selected_order_value: str, selected_data_name_value: str
+            selected_order: TableOrder, selected_data_name: DataNames
         ) -> Tuple[List[dict], str]:
-            ##################################################################################
-            # De-serialize from JSON serializable format to strongly typed and filtered format
-            ##################################################################################
-            selected_data_name = DataNames(selected_data_name_value)
-            selected_order = TableOrder(selected_order_value)
 
             ###########################################
             # Prevent update on invalid graph selection
