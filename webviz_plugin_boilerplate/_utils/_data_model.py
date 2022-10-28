@@ -69,7 +69,7 @@ class DataModel:
         self._data_set: DataSet
 
     def populate_with_mock_data(self):
-        _x = [x for x in range(0, 10)]
+        _x = list(range(0, 10))
         data_sample_dict: Dict[DataNames, Data] = {
             DataNames.FIRST: Data(x_data=_x, y_data=[x * x for x in _x]),
             DataNames.SECOND: Data(x_data=_x, y_data=[1, 3, -2, 5, 0, 7, 3, -5, -1, 3]),
