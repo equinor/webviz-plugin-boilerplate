@@ -5,8 +5,8 @@ from typing import Any, Dict, Union
 from dash import Input, Output, State, callback, no_update
 from dash.exceptions import PreventUpdate
 from webviz_config import EncodedFile
-from webviz_config.utils import StrEnum
-from webviz_config.webviz_plugin_subclasses import ViewABC, callback_typecheck
+from webviz_config.utils import StrEnum, callback_typecheck
+from webviz_config.webviz_plugin_subclasses import ViewABC
 
 from webviz_plugin_boilerplate._utils._data_model import DataModel, DataNames
 
