@@ -1,10 +1,10 @@
-from typing import Union, Type
-
-from webviz_config import WebvizPluginABC
+from typing import Type, Union
 
 from dash.development.base_component import Component
+from webviz_config import WebvizPluginABC
 
-from ._business_logic import GraphDataModel
+from webviz_plugin_boilerplate._utils._data_model import DataModel
+
 from ._callbacks import plugin_callbacks
 from ._layout import main_layout
 
@@ -20,8 +20,8 @@ class BestPracticePlugin(WebvizPluginABC):
     `Plugin functionality`:
     Plugin contains a model for graph data, which is populated with a set of mocked up
     graph data with unique names. The plugin provides a dropdown for selecting a
-    specific graph name from the set and show the graph data in plot. The model provides
-    additional ad-hoc calculations (raw, reversed and flipped) for the selected graph
+    specific graph name from the set and show the graph data in plot. The business logic
+    provides ad-hoc calculations (raw, reversed and flipped) for the selected graph
     data. Based on selected visualization option in the layout, the callback retrieves
     correct graph data from the model and provides it to the graph builder in the property
     serialization. Graph type options are provided (line plot and bar chart) as radio items
@@ -41,10 +41,10 @@ class BestPracticePlugin(WebvizPluginABC):
     """
 
     def __init__(self) -> None:
-        super().__init__()
+        super().__init__(stretch=True)
 
-        self._graph_data_model = GraphDataModel()
-        self._graph_data_model.populate_with_mock_data()
+        self._data_model = DataModel()
+        self._data_model.populate_with_mock_data()
 
         self.set_callbacks()
 
@@ -52,8 +52,8 @@ class BestPracticePlugin(WebvizPluginABC):
     def layout(self) -> Union[str, Type[Component]]:
         return main_layout(
             get_uuid=self.uuid,
-            graph_names=self._graph_data_model.graph_set().graph_names(),
+            graph_names=self._data_model.data_set().names(),
         )
 
     def set_callbacks(self) -> None:
-        plugin_callbacks(self.uuid, self._graph_data_model)
+        plugin_callbacks(self.uuid, self._data_model)

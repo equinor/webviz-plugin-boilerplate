@@ -1,8 +1,8 @@
-from enum import Enum
-
 import plotly.graph_objs as go
 
 from webviz_plugin_boilerplate._utils._data_model import Data
+
+from .._settings import GraphTypeOptions
 
 ###################################################################
 #
@@ -30,31 +30,6 @@ from webviz_plugin_boilerplate._utils._data_model import Data
 ###################################################################
 
 
-class GraphTypeOptions(str, Enum):
-    """
-    Type definition of graph type options
-
-    For de-serialization of graph type selection in callback Input/State
-    property.
-    """
-
-    LINE_PLOT = "Line plot"
-    BAR_CHART = "Bar chart"
-
-
-class GraphDataVisualizationOptions(str, Enum):
-    """
-    Type definition of graph data visualization options
-
-    For de-serialization of graph data visualization selection in callback
-    Input/State property.
-    """
-
-    RAW = "Raw"
-    REVERSED = "Reversed"
-    FLIPPED = "Flipped"
-
-
 class GraphFigureBuilder:
     """
     Figure builder for creating/building serializable Output property data
@@ -64,9 +39,10 @@ class GraphFigureBuilder:
     data for callback Output property.
     """
 
-    def __init__(self, graph_type: GraphTypeOptions) -> None:
+    def __init__(self, graph_type: GraphTypeOptions, line_color: str = "red") -> None:
         self._figure = go.Figure()
         self._graph_type = graph_type
+        self._line_color = line_color
 
     def add_graph_title(self, title: str) -> None:
         self._figure.update_layout(title=title)
@@ -75,10 +51,17 @@ class GraphFigureBuilder:
         trace = None
         if self._graph_type == GraphTypeOptions.LINE_PLOT:
             trace = go.Scatter(
-                x=graph_data.x_data(), y=graph_data.y_data(), mode="lines"
+                x=graph_data.x_data(),
+                y=graph_data.y_data(),
+                mode="lines",
+                line_color=self._line_color,
             )
         if self._graph_type == GraphTypeOptions.BAR_CHART:
-            trace = go.Bar(x=graph_data.x_data(), y=graph_data.y_data())
+            trace = go.Bar(
+                x=graph_data.x_data(),
+                y=graph_data.y_data(),
+                marker_color=self._line_color,
+            )
         if not trace:
             raise ValueError(f'Graph type "{self._graph_type.value}" is not handled!')
         self._figure.add_trace(trace)

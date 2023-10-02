@@ -1,8 +1,7 @@
 from uuid import uuid4
 
-from dash import callback
+from dash import callback, html
 from dash.dependencies import Input, Output
-import dash_html_components as html
 from webviz_config import WebvizPluginABC
 
 

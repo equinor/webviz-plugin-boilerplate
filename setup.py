@@ -16,6 +16,7 @@ setup(
             "SomeCustomPlugin = webviz_plugin_boilerplate.plugins:SomeCustomPlugin",
             "SomeOtherCustomPlugin = webviz_plugin_boilerplate.plugins:SomeOtherCustomPlugin",
             "BestPracticePlugin = webviz_plugin_boilerplate.plugins:BestPracticePlugin",
+            "WlfBestPracticePlugin = webviz_plugin_boilerplate.plugins:WlfBestPracticePlugin",
         ]
     },
     install_requires=[

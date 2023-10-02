@@ -1,5 +1,7 @@
 from webviz_plugin_boilerplate._utils._data_model import Data
 
+from .._settings import TableOrder
+
 ######################################################################
 #
 # Business logic is intended to possess data handling functionality
@@ -14,14 +16,17 @@ from webviz_plugin_boilerplate._utils._data_model import Data
 ######################################################################
 
 
-def create_reversed_data(data: Data) -> Data:
-    x_data = data.x_data().copy()
-    y_data = data.y_data().copy()
-    list.reverse(y_data)
-    return Data(x_data, y_data)
+def create_table_data_with_order(data: Data, order: TableOrder) -> Data:
+    """
+    Business logic for handling order of data samples.
 
+    The extraction is only to illustrate separation/structuring of business code
+    """
+    _x = data.x_data().copy()
+    _y = data.y_data().copy()
 
-def create_flipped_data(data: Data) -> Data:
-    x_data = data.x_data().copy()
-    y_data = [-elm for elm in data.y_data()]
-    return Data(x_data, y_data)
+    if order is TableOrder.DESC:
+        _x.reverse()
+        _y.reverse()
+
+    return Data(_x, _y)
